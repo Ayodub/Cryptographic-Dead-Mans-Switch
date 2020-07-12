@@ -15,8 +15,8 @@ def interrupted(signum, frame):          #This is the 'alarm clock', which activ
 signal.signal(signal.SIGALRM, interrupted) #this calls the process on line 26 so that it will print 'files encrypted' instead of simply 'alarm clock'
 
 
-def count(s):      #This is the count, with the countdown printed to screen.
-   
+def count():      #This is the count, with the countdown printed to screen.
+    global s
     while s < TIMEOUT:
             print(format(s))
             s = s+1
@@ -25,20 +25,16 @@ def count(s):      #This is the count, with the countdown printed to screen.
 
 
 def i_input():    #this is the alert for interaction and the reset trigger when interacted with.
-    try:
-        print(f'Encryption will begin in {TIMEOUT} seconds')
-        interact = input()
-        print('input received, reseting.')
-        signal.alarm(TIMEOUT)
-        i_input()
-        
-    except:
-        return
+    global s
+    print(f'Encryption will begin in {TIMEOUT} seconds')
+    interact = input()
+    print('input received, reseting.')
+    s=0
+    i_input
         
 signal.alarm(TIMEOUT)
 
 
-
-threading.Thread(target = i_input).start()
-countThread = threading.Thread(target=count, args=(0,));
-countThread.start();
+s = 0
+threading.Thread(target=i_input).start()
+threading.Thread(target=count).start()
