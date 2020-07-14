@@ -6,31 +6,31 @@ import threading #I need to have input and countdown operating at same time
 starttime=time.time() 
 lasttime=starttime 
 
-trigger = input("How many seconds until switch is triggered? : ")
-TIMEOUT = int(trigger)
+clock = input("How many seconds until switch is triggered? : ")
+trigger = int(clock)
 
 def interrupted(signum, frame):          #This is the 'alarm clock', which activates if it reaches timer
     pass
 
-signal.signal(signal.SIGALRM, interrupted) #this calls the process on line 26 so that it will print 'files encrypted' instead of simply 'alarm clock'
+signal.signal(signal.SIGALRM, interrupted) #it will print 'files encrypted' instead of simply 'alarm clock'
 
 def count(): 
     global s    
-    while s < TIMEOUT:
+    while s > 0:
         print(s)
-        s += 1
+        s -= 1
         time.sleep(1)
     print("Files have been encrypted")
 
-def i_input():  # this is the alert for interaction and the reset trigger when interacted with.
+def user_reset():  # this is the alert for interaction and the reset trigger when interacted with.
     global s
-    print(f'Encryption will begin in {TIMEOUT} seconds')
+    print(f'Encryption will begin in {trigger} seconds')
     interact = input()
     print('input received, reseting.')
-    s = 0
-    i_input()
+    s = trigger
+    user_reset()
 
 
-s = 0
-threading.Thread(target=i_input).start()
+s = trigger
+threading.Thread(target=user_reset).start()
 threading.Thread(target=count).start()
