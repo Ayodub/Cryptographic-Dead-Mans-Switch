@@ -5,6 +5,8 @@ import threading #I need to have input and countdown operating at same time
 from cryptography.fernet import Fernet
 import glob
 import os
+from os import remove
+from sys import argv
 
 
 #-----------------------------#
@@ -39,7 +41,9 @@ lasttime=starttime
 
 warning= input("Your  decryption key has been generated. It is recommended that you keep this in a separate location to the \nfiles which you wish to encrypt. Press enter to continue..")
 
-clock = input("How many seconds until switch is triggered? : ")
+self_destruct= input("Do you want this program to self-delete at end of execution? y/n")
+
+clock = input("\n How many seconds until switch is triggered? : ")
 trigger = int(clock)
 
 def interrupted(signum, frame):          #This is the 'alarm clock', which activates if it reaches timer
@@ -98,5 +102,10 @@ for x in glob.glob(currentdirectory +'/**/*/*', recursive=True):    # Main loop 
 
 
 print('\n Encryption complete...\n\n')
+
+#if self_destruct = "y":          -------------------------------------------------
+    #remove(argv[0])              Uncomment these to make self-destruct is possible 
+#else:                            -------------------------------------------------
+    #quit()
 
 
