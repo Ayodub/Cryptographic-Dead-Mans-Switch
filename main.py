@@ -37,6 +37,8 @@ f = Fernet(key)   #file_list = os.listdir(currentdirectory)
 starttime=time.time() 
 lasttime=starttime 
 
+warning= input("Your  decryption key has been generated. It is recommended that you keep this in a separate location to the \nfiles which you wish to encrypt. Press enter to continue..")
+
 clock = input("How many seconds until switch is triggered? : ")
 trigger = int(clock)
 
