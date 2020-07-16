@@ -1,6 +1,5 @@
 import time
-import signal
-import threading #I need to have input and countdown operating at same time
+import threading 
 #import datetime    Date time module could be used if the script was running over longer periods such as days/weeks/months
 from cryptography.fernet import Fernet
 import glob
@@ -51,23 +50,17 @@ while True:    #infinite loop used to control errors from input
         break
     except ValueError:
         print("please type 'y' or 'n'")
-print(type(clock))
+
 while True:
     try:
         while clock <= 0 and not math.isnan(clock): 
-            print(type(clock))         
+                    
             clock = int(input("\n How many seconds until switch is triggered? : "))  #input returns to line 57 before continuing, so the clock=int(input) is important so that the comparison on line 57 works
         break
     except ValueError:
         print("please enter a number greater than 0")
         
-
 trigger = int(clock)
-
-def interrupted(signum, frame):          #This is the 'alarm clock', which activates if it reaches timer
-    pass
-
-signal.signal(signal.SIGALRM, interrupted) #it will print 'files encrypted' instead of simply 'alarm clock'
 
 def count(): 
     global s    
@@ -119,9 +112,9 @@ for x in glob.glob(currentdirectory +'/**/*/*', recursive=True):    # Main loop 
 
 print('\n Encryption complete...\n\n')
 
-#if self_destruct == "y":          #-------------------------------------------------
-    #remove(argv[0])              #comment these to make self-destruct not possible 
-#elif self_destruct == "n":      #-------------------------------------------------
-    #quit()
+if self_destruct == "y":          #-------------------------------------------------
+    remove(argv[0])              #comment these to make self-destruct not possible 
+elif self_destruct == "n":      #-------------------------------------------------
+    quit()
 
 
