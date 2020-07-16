@@ -53,7 +53,8 @@ while True:
                 with open(newfile, "wb") as file:  
                     file.write(decrypted_data)
 
-                os.remove(filepath)  
+                os.remove(filepath)
+                  
     elif decrypt_encrypt=="1":
         #define variables early so that I set up an error handling loop
         self_destruct=0
@@ -151,6 +152,24 @@ while True:
 
 
         print('\n>>>Encryption complete...\n\n')
+
+        time.sleep(2)
+        print('''
+        
+          __________         |) /\ |\ | /`  |
+         /________ /|        |) \/ | \| \]  .
+        |   X|I   | |
+        |    |    | | |) /\ |\ | /`  |
+        |IX  * III| | |) \/ | \| \]  .
+        |    |    | |
+        |____VI___| |         |) /\ |\ | /`  |
+        |    /    | |         |) \/ | \| \]  .
+        |   /     | |
+        |  /      | |     |) /\ |\ | /`  |
+        |( )      | |     |) \/ | \| \]  .
+        |_________|/
+                     |) /\ |\ | /`  |
+                     |) \/ | \| \]  .''')
 
         if self_destruct == "y":          #-------------------------------------------------
             remove(argv[0])              #comment these to make self-destruct not possible 
