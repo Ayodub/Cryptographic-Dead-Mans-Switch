@@ -13,8 +13,13 @@ import math
 #at a long period such as 1 month, and immediately hide the key. Next the DMS runs, and finally the actual encryption.
 #All of the definitions for encryption are placed at the top, and only the recursive selection and encryption itself are
 #placed last.
+#the whole file is placed in an infinite loop to integrate the two scripts with error handling
+
+
+intro=input(">>>Usage \n \nThis script allows the user two options:\n \n1)Dead man's switch encryption, which will recursively encrypt data if it does not receive input by the given deadline. Upon receiving \ninput the countdown will reset. This program may be set to self-delete upon encryption...\n \n2)Recursive decryption, as a provision for users who accidentally encrypt their data... \n\n>>>Press enter to continue ")
+
 while True:
-    decrypt_encrypt=input("Enter 1 for Dead Man Switch Encryption \nEnter 2 for Decryption ")
+    decrypt_encrypt=input("\nEnter 1 for Dead Man's Switch Encryption \nEnter 2 for Decryption\n>>>")
 
     if decrypt_encrypt == "2":
         currentdirectory = os.getcwd()   # Get current directory (don't want to encrypt system files)
@@ -76,12 +81,12 @@ while True:
         starttime=time.time() 
         lasttime=starttime 
 
-        warning= input("Your  decryption key has been generated. It is recommended that you keep this in a separate location to the \nfiles which you wish to encrypt. Press enter to continue..")
+        warning= input("\n>>>Your  decryption key has been generated. It is recommended that you keep this in a separate location to the \nfiles which you wish to encrypt. Press enter to continue..")
 
         while True:    #infinite loop used to control errors from input
             try:
                 while self_destruct != "y" and self_destruct != "n":
-                    self_destruct= input("Do you want this program to self-delete at end of execution? y/n :")
+                    self_destruct= input("\n \n>>>Do you want this program to self-delete at end of execution? y/n :")
                 break
             except ValueError:
                 print("please type 'y' or 'n'")
@@ -90,7 +95,7 @@ while True:
             try:
                 while clock <= 0 and not math.isnan(clock): 
                             
-                    clock = int(input("\n How many seconds until switch is triggered? : "))  #input returns to line 57 before continuing, so the clock=int(input) is important so that the comparison on line 57 works
+                    clock = int(input("\n>>>How many seconds until switch is triggered? : "))  #input returns to line 57 before continuing, so the clock=int(input) is important so that the comparison on line 57 works
                 break
             except ValueError:
                 print("please enter a number greater than 0")
@@ -106,9 +111,9 @@ while True:
 
         def user_reset():  # this is the alert for interaction and the reset trigger when interacted with.
             global s
-            print(f'Encryption will begin in {trigger} seconds')
+            print(f'\n>>>Encryption will begin in {trigger} seconds')
             interact = input()
-            print('input received, reseting.')
+            print('\n>>>input received, reseting.')
             s = trigger
             user_reset()
 
@@ -123,7 +128,7 @@ while True:
 
         y.join()
 
-        print("Beginning recursive encryption..")
+        print(">>>Beginning recursive encryption..")
 
         for x in glob.glob(currentdirectory +'/**/*/*', recursive=True):    # Main loop to encrypt all files recursively
         # double asterix ** tells program to encrypt all types of files
@@ -145,7 +150,7 @@ while True:
                 os.remove(filepath)  #removes the old file
 
 
-        print('\n Encryption complete...\n\n')
+        print('\n>>>Encryption complete...\n\n')
 
         if self_destruct == "y":          #-------------------------------------------------
             remove(argv[0])              #comment these to make self-destruct not possible 
@@ -153,5 +158,5 @@ while True:
             quit()
 
     else:
-        print("Please enter either '1 or '2'")
+        print(">>>Please enter either '1 or '2'")
 
