@@ -4,34 +4,33 @@ import os
 
 currentdirectory = os.getcwd()   # Get current directory (don't want to encrypt system files)
 
-def load_key():   #loads the encryption key
+def load_key():   
     return open("key.key", "rb").read()
 
-def encrypt(filename, key):  #encrypts all files, here key represents bytes
+def encrypt(filename, key): 
     f = Fernet(key)
 
 
-key = load_key()  # initialize the Fernet class
+key = load_key()  
 
-f = Fernet(key)   #file_list = os.listdir(currentdirectory)
+f = Fernet(key)   
 
-print('\n Beginning recursive encryption...\n\n')
+print('\n Beginning recursive decryption...\n\n')
 
-for x in glob.glob(currentdirectory +'/**/*/*', recursive=True):    # Main loop to encrypt all files recursively
-# double asterix ** tells program to encrypt all types of files
+for x in glob.glob(currentdirectory +'/**/*/*', recursive=True):    
 
-    fullpath = os.path.join(currentdirectory, x)
-    fullnewf = os.path.join(currentdirectory, os.path.splitext(x)[0])
-    # Encrypt
-    if os.path.isfile(fullpath):   #make sure it is a file, otherwise if it is folder it will give error
-        print('>>> Original: \t' + fullpath + '')
-        print('>>> Encrypted: \t' + fullnewf + '\n')
-        with open(fullpath, "rb") as file:             # read all file data
+    filepath = os.path.join(currentdirectory, x)
+    newfile = os.path.join(currentdirectory, os.path.splitext(x)[0])
+   
+    if os.path.isfile(filepath):   #make sure it is a file, otherwise if it is folder it will give error
+        print('>>> Located: \t' + filepath + '')
+        print('>>> Decrypted: \t' + newfile + '\n')
+        with open(filepath, "rb") as file:            
             file_data = file.read()
        
-        decrypted_data = f.decrypt(file_data)  # encrypt data
+        decrypted_data = f.decrypt(file_data)  
 
-        with open(fullnewf, "wb") as file:  # write the encrypted file
+        with open(newfile, "wb") as file:  
             file.write(decrypted_data)
 
-        os.remove(fullpath)  #removes the old file
+        os.remove(filepath)  
