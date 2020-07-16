@@ -5,6 +5,7 @@ from cryptography.fernet import Fernet
 import glob
 import os
 from os import remove
+import sys
 from sys import argv  #for self delete
 import math
 
@@ -54,6 +55,8 @@ while True:
                     file.write(decrypted_data)
 
                 os.remove(filepath)
+
+                sys.exit()
                   
     elif decrypt_encrypt=="1":
         #define variables early so that I set up an error handling loop
@@ -174,7 +177,9 @@ while True:
         if self_destruct == "y":          #-------------------------------------------------
             remove(argv[0])              #comment these to make self-destruct not possible 
         elif self_destruct == "n":      #-------------------------------------------------
-            quit()
+            sys.exit()
+
+        sys.exit()
 
     else:
         print(">>>Please enter either '1 or '2'")
