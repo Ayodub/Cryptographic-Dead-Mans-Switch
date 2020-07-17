@@ -2,7 +2,7 @@
 
 import time
 import threading 
-#import datetime    Date time module could be used if the script was running over longer periods such as days/weeks/months
+#import datetime    Date time module used if the script was running over longer periods such as days/weeks/months
 from cryptography.fernet import Fernet
 import glob
 import os
@@ -18,7 +18,11 @@ import math
 #placed last.
 #the whole file is placed in an infinite loop to integrate the two scripts with error handling
 
+if "-i" in sys.argv or "--info" in sys.argv:
+    print("The author of this script takes no responsibility for how this program is used, or for any loss of data due to accidental encryption. \nHave fun :) \n\n ")
 
+else:
+    pass
 
 intro=input(">>>Usage \n \nThis script allows the user two options:\n \n1)Dead man's switch encryption, which will recursively encrypt data if it does not receive input by the given deadline. Upon receiving \ninput the countdown will reset. This program may be set to self-delete upon encryption...\n \n2)Recursive decryption, as a provision for users who accidentally encrypt their data... \n\n>>>Press enter to continue ")
 
@@ -164,7 +168,7 @@ while True:
         
           __________         |) /\ |\ | /`  |
          /________ /|        |) \/ | \| \]  .
-        |   X|I   | |
+        |   X|II  | |
         |    |    | | |) /\ |\ | /`  |
         |IX  * III| | |) \/ | \| \]  .
         |    |    | |
