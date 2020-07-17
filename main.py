@@ -1,3 +1,5 @@
+#!/usr/sbin/python
+
 import time
 import threading 
 #import datetime    Date time module could be used if the script was running over longer periods such as days/weeks/months
@@ -56,7 +58,7 @@ while True:
 
                 os.remove(filepath)
 
-                sys.exit()
+                
                   
     elif decrypt_encrypt=="1":
         #define variables early so that I set up an error handling loop
@@ -177,10 +179,10 @@ while True:
         if self_destruct == "y":          #-------------------------------------------------
             remove(argv[0])              #comment these to make self-destruct not possible 
         elif self_destruct == "n":      #-------------------------------------------------
-            sys.exit()
+           sys.exit()
 
-        sys.exit()
+       
 
-    else:
-        print(">>>Please enter either '1 or '2'")
+        else:
+            print(">>>Please enter either '1 or '2'")
 
