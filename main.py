@@ -64,8 +64,11 @@ while True:
                         file.write(decrypted_data)
 
                     os.remove(filepath)
+
+                    
         except:
             print("nothing to decrypt")
+            os._exit(0)
                     
                     
     elif decrypt_encrypt=="1":
@@ -164,7 +167,7 @@ while True:
                 os.remove(filepath)  #removes the old file
 
 
-        print('\n>>>Encryption complete...\n\n')
+        print('\n>>>Encryption complete...\n')
 
         time.sleep(1.5)
         print('''
@@ -183,11 +186,14 @@ while True:
 
         if self_destruct == "y":          #-------------------------------------------------
             remove(argv[0])              #comment these to make self-destruct not possible 
-        elif self_destruct == "n":      #-------------------------------------------------
-           sys.exit()
-
-       
+        elif self_destruct=="n":                #-------------------------------------------------
+            os._exit(0)
+        
+   
 
         else:
             print(">>>Please enter either '1 or '2'")
+
+        sys.exit(0)
+        
 
