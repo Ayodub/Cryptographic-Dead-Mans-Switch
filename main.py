@@ -27,7 +27,7 @@ else:
 intro=input(">>>Usage \n \nThis script allows the user two options:\n \n1)Dead man's switch encryption, which will recursively encrypt data if it does not receive input by the given deadline. Upon receiving \ninput the countdown will reset. This program may be set to self-delete upon encryption...\n \n2)Recursive decryption, as a provision for users who accidentally encrypt their data... \n\n>>>Press enter to continue ")
 
 while True:
-    decrypt_encrypt=input("\nEnter 1 for Dead Man's Switch Encryption \nEnter 2 for Decryption\n>>>")
+    decrypt_encrypt=input("\nEnter 1 for Dead Man's Switch Encryption \nEnter 2 for Decryption\n>>> ")
 
     
     if decrypt_encrypt == "2":
