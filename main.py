@@ -29,42 +29,45 @@ intro=input(">>>Usage \n \nThis script allows the user two options:\n \n1)Dead m
 while True:
     decrypt_encrypt=input("\nEnter 1 for Dead Man's Switch Encryption \nEnter 2 for Decryption\n>>>")
 
+    
     if decrypt_encrypt == "2":
-        currentdirectory = os.getcwd()   # Get current directory (don't want to encrypt system files)
+        try:
+            currentdirectory = os.getcwd()   # Get current directory (don't want to encrypt system files)
 
-        def load_key():   
-            return open("key.key", "rb").read()
+            def load_key():   
+                return open("key.key", "rb").read()
 
-        def encrypt(filename, key): 
-            f = Fernet(key)
+            def encrypt(filename, key): 
+                f = Fernet(key)
 
 
-        key = load_key()  
+            key = load_key()  
 
-        f = Fernet(key)   
+            f = Fernet(key)   
 
-        print('\n Beginning recursive decryption...\n\n')
+            print('\n Beginning recursive decryption...\n\n')
 
-        for x in glob.glob(currentdirectory +'/**/*/*', recursive=True):    
+            for x in glob.glob(currentdirectory +'/**/*/*', recursive=True):    
 
-            filepath = os.path.join(currentdirectory, x)
-            newfile = os.path.join(currentdirectory, os.path.splitext(x)[0])
-        
-            if os.path.isfile(filepath):   #make sure it is a file, otherwise if it is folder it will give error
-                print('>>> Located: \t' + filepath + '')
-                print('>>> Decrypted: \t' + newfile + '\n')
-                with open(filepath, "rb") as file:            
-                    file_data = file.read()
+                filepath = os.path.join(currentdirectory, x)
+                newfile = os.path.join(currentdirectory, os.path.splitext(x)[0])
             
-                decrypted_data = f.decrypt(file_data)  
-
-                with open(newfile, "wb") as file:  
-                    file.write(decrypted_data)
-
-                os.remove(filepath)
-
+                if os.path.isfile(filepath):   #make sure it is a file, otherwise if it is folder it will give error
+                    print('>>> Located: \t' + filepath + '')
+                    print('>>> Decrypted: \t' + newfile + '\n')
+                    with open(filepath, "rb") as file:            
+                        file_data = file.read()
                 
-                  
+                    decrypted_data = f.decrypt(file_data)  
+
+                    with open(newfile, "wb") as file:  
+                        file.write(decrypted_data)
+
+                    os.remove(filepath)
+        except:
+            print("nothing to decrypt")
+                    
+                    
     elif decrypt_encrypt=="1":
         #define variables early so that I set up an error handling loop
         self_destruct=0
